@@ -7,7 +7,14 @@ angular.module('github-directives')
             scope: {
                 'ghUser': '@'
             },
-            templateUrl: 'src/template/reposTemplate.html',
+            template:
+                '<span>{{ ghUser }}</span>' +
+                    '<ul>' +
+                        '<li ng-repeat="repo in repos">' +
+                            '<a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>' +
+                            '<span style="font-size: 11px;">(Open Issues: {{ repo.open_issues }} - Forks: {{ repo.forks }})</span>' +
+                        '</li>' +
+                    '</ul>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 $scope.repos = [];
 
