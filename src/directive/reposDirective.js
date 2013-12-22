@@ -11,7 +11,7 @@ angular.module('github-directives')
                 '<span>{{ ghUser }}</span>' +
                     '<ul>' +
                         '<li ng-repeat="repo in repos">' +
-                            '<a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>' +
+                            '<a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a> ' +
                             '<span style="font-size: 11px;">(Open Issues: {{ repo.open_issues }} - Forks: {{ repo.forks }})</span>' +
                         '</li>' +
                     '</ul>',
@@ -23,7 +23,7 @@ angular.module('github-directives')
                         return;
                     }
                     $http({method: 'GET', url: apiUrl + '/users/' + $scope.ghUser + '/repos'})
-                        .success(function (data, status, headers, config) {
+                        .success(function (data) {
                             $scope.repos = data;
                         });
                 });
