@@ -1,9 +1,9 @@
 'use strict'
 
 angular.module('github-directives')
-    .directive('repos', function () {
+    .directive('ghRepositories', function () {
         return {
-            restrict: 'A',
+            restrict: 'EA',
             scope: {
                 'ghUser': '@'
             },
