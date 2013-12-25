@@ -3,7 +3,7 @@
 angular.module('github-directives')
     .directive('ghRepositoryCommits', function () {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             scope: {
                 'ghUser': '@',
                 'ghRepo': '@'

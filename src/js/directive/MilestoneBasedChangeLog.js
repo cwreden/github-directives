@@ -3,7 +3,7 @@
 angular.module('github-directives')
     .directive('ghMilestoneChangeLog', function () {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             scope: {
                 'user': '@',
                 'repo': '@',
