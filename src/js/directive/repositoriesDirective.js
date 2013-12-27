@@ -5,17 +5,17 @@ angular.module('github-directives')
         return {
             restrict: 'E',
             scope: {
-                'ghUser': '@'
+                'user': '@'
             },
             templateUrl: 'src/template/RepositoriesTemplate.html',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 $scope.repos = [];
 
-                $scope.$watch('ghUser', function () {
-                    if ($scope.ghUser == undefined) {
+                $scope.$watch('user', function () {
+                    if ($scope.user == undefined) {
                         return;
                     }
-                    $http({method: 'GET', url: apiUrl + '/users/' + $scope.ghUser + '/repos'})
+                    $http({method: 'GET', url: apiUrl + '/users/' + $scope.user + '/repos'})
                         .success(function (data) {
                             $scope.repos = data;
                         });

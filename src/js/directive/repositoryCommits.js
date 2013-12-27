@@ -5,18 +5,18 @@ angular.module('github-directives')
         return {
             restrict: 'E',
             scope: {
-                'ghUser': '@',
-                'ghRepo': '@'
+                'user': '@',
+                'repo': '@'
             },
             templateUrl: 'src/template/RepositoryCommitsTemplate.html',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 $scope.commits = [];
 
-                $scope.$watch('ghUser', function () {
-                    if ($scope.ghUser == undefined || $scope.ghRepo == undefined) {
+                $scope.$watch('repo', function () {
+                    if ($scope.user == undefined || $scope.repo == undefined) {
                         return;
                     }
-                    $http({method: 'GET', url: apiUrl + '/repos/' + $scope.ghUser + '/' + $scope.ghRepo + '/commits'})
+                    $http({method: 'GET', url: apiUrl + '/repos/' + $scope.user + '/' + $scope.repo + '/commits'})
                         .success(function (data) {
                             $scope.commits = data;
                         });
