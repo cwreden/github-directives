@@ -1,0 +1,21 @@
+{
+  "name": "github-directives",
+  "version": "0.1.0",
+  "homepage": "https://github.com/cwreden/github-directives",
+  "keywords": [
+    "github",
+    "directives",
+    "angular"
+  ],
+  "authors": [
+    "Christian Wreden <christian.wreden@googlemail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
