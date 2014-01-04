@@ -33,6 +33,12 @@ angular.module('github-directives')
                     $http({method: 'GET', url: apiUrl + '/users/' + $scope.name})
                         .success(function (data) {
                             $scope.user = data;
+                        })
+                        .error(function (data, status) {
+                            if (status == 403) {
+                                console.warn('Loading failed.')
+                                // TODO Request Limit beachten und dementsprechend reagieren.
+                            }
                         });
                 });
             }]
