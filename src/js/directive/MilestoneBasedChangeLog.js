@@ -9,7 +9,16 @@ angular.module('github-directives')
                 'repo': '@',
                 'milestone': '@'
             },
-            templateUrl: 'src/template/MilestoneChangeLog.html',
+            template:
+                '<div class="panel panel-default">' +
+                    '<div class="panel-heading">Changelog for {{ milestone }} from {{ repo }} by {{ user }}</div>' +
+                    '<div class="panel-body">' +
+                        '<h3>{{ milestone }}</h3>' +
+                        '<ul>' +
+                            '<li ng-repeat="issue in issues">{{ issue.title }}</li>' +
+                        '</ul>' +
+                    '</div>' +
+                '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 $scope.issues = [];
 

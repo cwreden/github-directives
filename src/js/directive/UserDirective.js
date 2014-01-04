@@ -9,7 +9,20 @@ angular.module('github-directives')
                 'showAvatar': '@',
                 'showBlog': '@'
             },
-            templateUrl: 'src/template/UserTemplate.html', // ToDo Pfad anpassen => /template/UserTemplate.html
+            template:
+                '<div class="panel panel-default">' +
+                    '<div class="panel-heading">{{ user.name }}</div>' +
+                    '<div class="panel-body">' +
+                        '<div ng-show="showAvatar">' +
+                            '<img src="{{ user.avatar_url }}">' +
+                            '</div>' +
+                            '<div>Repositories: <a target="_blank" href="https://github.com/{{ name }}?tab=repositories">{{ user.public_repos }}</a></div>' +
+                            '<div>Gists: {{ user.public_gists }}</div>' +
+                            '<div>Followers: <a target="_blank" href="https://github.com/{{ name }}/followers">{{ user.followers}}</a></div>' +
+                            '<div>Following: <a target="_blank" href="https://github.com/{{ name }}/following">{{ user.following}}</a></div>' +
+                            '<a ng-show="showBlog && user.blog" href="{{ user.blog }}" target="_blank">Blog</a>' +
+                        '</div>' +
+                    '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 $scope.user = {};
 
