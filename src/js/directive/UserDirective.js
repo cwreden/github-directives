@@ -12,6 +12,8 @@ angular.module('github-directives')
                 'showCompany': '=',
                 'showLocation': '=',
                 'showGists': '=',
+                'showJoinDate': '=',
+                'showUpdateDate': '=',
                 'hideRepositories': '=',
                 'hideFollowers': '=',
                 'hideFollowing': '='
@@ -30,6 +32,8 @@ angular.module('github-directives')
                             '<div ng-hide="hideFollowers">Followers: <a target="_blank" href="https://github.com/{{ name }}/followers">{{ user.followers}}</a></div>' +
                             '<div ng-hide="hideFollowing">Following: <a target="_blank" href="https://github.com/{{ name }}/following">{{ user.following}}</a></div>' +
                             '<a ng-show="showBlog && user.blog" href="{{ user.blog }}" target="_blank">Blog</a>' +
+                            '<div ng-show="showJoinDate">Joined on {{ user.joinedOn }}</div>' +
+                            '<div ng-show="showUpdateDate">Updated on {{ user.updatedOn }}</div>' +
                         '</div>' +
                     '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
@@ -43,12 +47,13 @@ angular.module('github-directives')
                     }
                     $http({method: 'GET', url: apiUrl + '/users/' + $scope.name})
                         .success(function (data) {
-                            console.log($scope)
                             $scope.user = data;
+                            $scope.user.joinedOn = (new Date(data.created_at)).toLocaleDateString();
+                            $scope.user.updatedOn = (new Date(data.updated_at)).toLocaleDateString();
                         })
                         .error(function (data, status) {
                             if (status == 403) {
-                                console.warn('Loading failed.')
+                                console.warn('Loading failed.');
                                 // TODO Request Limit beachten und dementsprechend reagieren.
                             }
                         });
