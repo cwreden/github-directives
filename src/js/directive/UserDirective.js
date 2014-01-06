@@ -10,6 +10,7 @@ angular.module('github-directives')
                 'avatarSize': '@',
                 'showBlog': '=',
                 'showCompany': '=',
+                'showLocation': '=',
                 'showGists': '=',
                 'hideRepositories': '=',
                 'hideFollowers': '=',
@@ -23,6 +24,7 @@ angular.module('github-directives')
                             '<a target="_blank" href="{{ user.html_url }}"><img src="{{ user.avatar_url }}" style="width: {{ avatarSize }}; height: {{ avatarSize }};"></a>' +
                             '</div>' +
                             '<div ng-show="showCompany">Company: {{ user.company }}</div>' +
+                            '<div ng-show="showLocation">Location: {{ user.location }}</div>' +
                             '<div ng-hide="hideRepositories">Repositories: <a target="_blank" href="https://github.com/{{ name }}?tab=repositories">{{ user.public_repos }}</a></div>' +
                             '<div ng-show="showGists">Gists: {{ user.public_gists }}</div>' +
                             '<div ng-hide="hideFollowers">Followers: <a target="_blank" href="https://github.com/{{ name }}/followers">{{ user.followers}}</a></div>' +
