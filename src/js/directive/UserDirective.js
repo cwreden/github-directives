@@ -1,5 +1,5 @@
 'use strict'
-var bla;
+
 angular.module('github-directives')
     .directive('ghUser', function () {
         return {
