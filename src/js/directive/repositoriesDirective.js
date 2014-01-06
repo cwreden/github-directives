@@ -5,16 +5,22 @@ angular.module('github-directives')
         return {
             restrict: 'E',
             scope: {
-                'user': '@'
+                'user': '@',
+                'hideOpenIssues': '=',
+                'hideForks': '=',
+                'limit': '='
             },
             template:
                 '<div class="panel panel-default">' +
                     '<div class="panel-heading">Repositories: {{ user }}</div>' +
                     '<div class="panel-body">' +
-                        '<ul>' +
-                            '<li ng-repeat="repo in repos">' +
-                                '<a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>' +
-                                '<span style="font-size: 11px;">(Open Issues: {{ repo.open_issues }} - Forks: {{ repo.forks }})</span>' +
+                        '<ul class="list-unstyled">' +
+                            '<li ng-repeat="repo in repos" class="clearfix">' +
+                                '<a href="{{ repo.html_url }}" target="_blank">' +
+                                    '<span class="pull-left">{{ repo.name }}</span>' +
+                                    '<span class="pull-right forks" title="Forks" ng-hide="hideForks">{{ repo.forks }}</span>' +
+                                    '<span class="pull-right openIssues" title="Open Issues" ng-hide="hideOpenIssues">{{ repo.open_issues }}</span>' +
+                                '</a>' +
                             '</li>' +
                         '</ul>' +
                     '</div>' +
@@ -28,7 +34,11 @@ angular.module('github-directives')
                     }
                     $http({method: 'GET', url: apiUrl + '/users/' + $scope.user + '/repos'})
                         .success(function (data) {
-                            $scope.repos = data;
+                            if ($scope.limit == undefined) {
+                                $scope.repos = data;
+                            } else {
+                                $scope.repos = data.splice(0,$scope.limit);
+                            }
                         });
                 });
             }]
