@@ -23,7 +23,7 @@ angular.module('github-directives')
                     '<div class="panel-heading">{{ user.name }}</div>' +
                     '<div class="panel-body">' +
                         '<div ng-show="showAvatar">' +
-                            '<a target="_blank" href="{{ user.html_url }}"><img src="{{ user.avatar_url }}" style="width: {{ avatarSize }}; height: {{ avatarSize }};"></a>' +
+                            '<a target="_blank" href="{{ user.html_url }}"><img src="{{ avatarUrl }}"></a>' +
                             '</div>' +
                             '<div ng-show="showCompany">Company: {{ user.company }}</div>' +
                             '<div ng-show="showLocation">Location: {{ user.location }}</div>' +
@@ -37,9 +37,14 @@ angular.module('github-directives')
                         '</div>' +
                     '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
-                $scope.user = {};
+                function createGravatarUrl() {
+                    return 'http://gravatar.com/avatar/' + $scope.user.gravatar_id + '?s=' + $scope.avatarSize;
+                }
 
-                $scope.avatarSize = $scope.avatarSize || '100px';
+                $scope.user = {};
+                $scope.avatarSize = $scope.avatarSize || '100';
+                $scope.avatarUrl = '';
+
 
                 $scope.$watch('name', function () {
                     if ($scope.name == undefined) {
@@ -50,6 +55,7 @@ angular.module('github-directives')
                             $scope.user = data;
                             $scope.user.joinedOn = (new Date(data.created_at)).toLocaleDateString();
                             $scope.user.updatedOn = (new Date(data.updated_at)).toLocaleDateString();
+                            $scope.avatarUrl = createGravatarUrl();
                         })
                         .error(function (data, status) {
                             if (status == 403) {
