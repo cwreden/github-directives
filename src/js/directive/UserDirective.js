@@ -20,7 +20,7 @@ angular.module('github-directives')
             },
             template:
                 '<div class="panel panel-default">' +
-                    '<div class="panel-heading">{{ user.name }}</div>' +
+                    '<div class="panel-heading">{{ user.name || user.login }}</div>' +
                     '<div class="panel-body">' +
                         '<div ng-show="showAvatar">' +
                             '<a target="_blank" href="{{ user.html_url }}"><img src="{{ avatarUrl }}"></a>' +
@@ -38,7 +38,17 @@ angular.module('github-directives')
                     '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 function createGravatarUrl() {
-                    return 'http://gravatar.com/avatar/' + $scope.user.gravatar_id + '?s=' + $scope.avatarSize;
+                    var id = '';
+                    var size = 100;
+
+                    if ($scope.avatarSize) {
+                        size = $scope.avatarSize;
+                    }
+                    if ($scope.user.gravatar_id) {
+                        id = $scope.user.gravatar_id;
+                    }
+
+                    return 'http://gravatar.com/avatar/' + id + '?s=' + size;
                 }
 
                 $scope.user = {};
