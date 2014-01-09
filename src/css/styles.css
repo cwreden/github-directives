@@ -5,3 +5,12 @@
 .forks {
     padding-left: 1em;
 }
+
+.gravatar {
+    margin-right: 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd;
+
+}
