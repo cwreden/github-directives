@@ -9,7 +9,8 @@ angular.module('github-directives')
                 'repo': '@',
                 'hideAvatar': '=',
                 'hideDate': '=',
-                'hideAuthor': '='
+                'hideAuthor': '=',
+                'limit': '='
             },
             template:
                 '<div class="panel panel-default">' +
@@ -42,7 +43,11 @@ angular.module('github-directives')
                     }
                     $http({method: 'GET', url: apiUrl + '/repos/' + $scope.user + '/' + $scope.repo + '/commits'})
                         .success(function (data) {
-                            $scope.commits = data;
+                            if ($scope.limit == undefined) {
+                                $scope.commits = data;
+                            } else {
+                                $scope.commits = data.splice(0,$scope.limit);
+                            }
                         });
                 });
             }]
