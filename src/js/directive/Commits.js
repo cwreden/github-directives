@@ -6,17 +6,20 @@ angular.module('github-directives')
             restrict: 'E',
             scope: {
                 'user': '@',
-                'repo': '@'
+                'repo': '@',
+                'hideAvatar': '=',
+                'hideDate': '=',
+                'hideAuthor': '='
             },
             template:
                 '<div class="panel panel-default">' +
                     '<div class="panel-heading">{{ user }} / {{ repo }} / Commits</div>' +
                     '<div class="list-group">' +
                         '<a href="{{ commit.html_url }}" target="_blank" ng-repeat="commit in commits" class="list-group-item">' +
-                            '<img src="{{ createGravatarUrl(commit.author.gravatar_id) }}" class="gravatar">' +
+                            '<img src="{{ createGravatarUrl(commit.author.gravatar_id) }}" class="gravatar" ng-hide="hideAvatar">' +
                             '<span>{{ commit.commit.message }}</span>' +
-                            '<span class="badge">By: {{ commit.commit.author.name }}</span>' +
-                            '<span class="badge">{{ commit.commit.author.date | date:mediumDate }}</span>' +
+                            '<span class="badge" ng-hide="hideAuthor">By: {{ commit.commit.author.name }}</span>' +
+                            '<span class="badge" ng-hide="hideDate">{{ commit.commit.author.date | date:mediumDate }}</span>' +
                         '</a>' +
                     '</div>' +
                 '</div>',
