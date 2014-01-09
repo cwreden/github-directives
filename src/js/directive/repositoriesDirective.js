@@ -8,21 +8,19 @@ angular.module('github-directives')
                 'user': '@',
                 'hideOpenIssues': '=',
                 'hideForks': '=',
+                'hideLanguage': '=',
                 'limit': '='
             },
             template:
                 '<div class="panel panel-default">' +
-                    '<div class="panel-heading">Repositories: {{ user }}</div>' +
-                    '<div class="panel-body">' +
-                        '<ul class="list-unstyled">' +
-                            '<li ng-repeat="repo in repos" class="clearfix">' +
-                                '<a href="{{ repo.html_url }}" target="_blank">' +
-                                    '<span class="pull-left">{{ repo.name }}</span>' +
-                                    '<span class="pull-right forks" title="Forks" ng-hide="hideForks">{{ repo.forks }}</span>' +
-                                    '<span class="pull-right openIssues" title="Open Issues" ng-hide="hideOpenIssues">{{ repo.open_issues }}</span>' +
-                                '</a>' +
-                            '</li>' +
-                        '</ul>' +
+                    '<div class="panel-heading">Repositories for {{ user }}</div>' +
+                    '<div class="list-group">' +
+                        '<a href="{{ repo.html_url }}" target="_blank" ng-repeat="repo in repos" class="list-group-item">' +
+                            '<span>{{ repo.name }}</span>' +
+                            '<span class="badge" title="Forks" ng-hide="hideForks">{{ repo.forks }}</span>' +
+                            '<span class="badge" title="Open Issues" ng-hide="hideOpenIssues">{{ repo.open_issues }}</span>' +
+                            '<span class="badge" title="Language" ng-show="repo.language" ng-hide="hideLanguage">{{ repo.language }}</span>' +
+                        '</a>' +
                     '</div>' +
                 '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
