@@ -6,36 +6,38 @@ angular.module('github-directives')
             restrict: 'E',
             scope: {
                 'name': '@',
-                'showAvatar': '=',
+                'hideAvatar': '=',
                 'avatarSize': '@',
-                'showBlog': '=',
-                'showCompany': '=',
-                'showLocation': '=',
-                'showGists': '=',
-                'showJoinDate': '=',
-                'showUpdateDate': '=',
-                'hideRepositories': '=',
+                'hideGists': '=',
+                'hideRepos': '=',
+                'hideStarred': '=',
                 'hideFollowers': '=',
-                'hideFollowing': '='
+                'hidehideFollowing': '=',
+                'showBlog': '='
             },
             template:
-                '<div class="panel panel-default">' +
-                    '<div class="panel-heading">{{ user.name || user.login }}</div>' +
-                    '<div class="panel-body">' +
-                        '<div ng-show="showAvatar">' +
-                            '<a target="_blank" href="{{ user.html_url }}"><img src="{{ avatarUrl }}"></a>' +
-                            '</div>' +
-                            '<div ng-show="showCompany">Company: {{ user.company }}</div>' +
-                            '<div ng-show="showLocation">Location: {{ user.location }}</div>' +
-                            '<div ng-hide="hideRepositories">Repositories: <a target="_blank" href="https://github.com/{{ name }}?tab=repositories">{{ user.public_repos }}</a></div>' +
-                            '<div ng-show="showGists">Gists: {{ user.public_gists }}</div>' +
-                            '<div ng-hide="hideFollowers">Followers: <a target="_blank" href="https://github.com/{{ name }}/followers">{{ user.followers}}</a></div>' +
-                            '<div ng-hide="hideFollowing">Following: <a target="_blank" href="https://github.com/{{ name }}/following">{{ user.following}}</a></div>' +
-                            '<a ng-show="showBlog && user.blog" href="{{ user.blog }}" target="_blank">Blog</a>' +
-                            '<div ng-show="showJoinDate">Joined on {{ user.joinedOn }}</div>' +
-                            '<div ng-show="showUpdateDate">Updated on {{ user.updatedOn }}</div>' +
-                        '</div>' +
-                    '</div>',
+                '<div class="githubUser">'+
+                    '<div ng-hide="hideAvatar">' +
+                        '<a target="_blank" href="{{ user.html_url }}"><img class="gravatar" src="{{ avatarUrl }}"></a>' +
+                    '</div>' +
+                    '<h2>{{ user.name }}<br />' +
+                    '<small>{{ user.login }}</small></h2>' +
+                    '<hr />' +
+                    '<ul>' +
+                        '<li ng-hide="!user.company ">{{ user.company }}</li>' +
+                        //'<li ng-show="user.location">Location: {{ user.location }</li>' + //TODO get the location info
+                        '<li ng-show="showBlog && user.blog"><a href="{{ user.blog }}" target="_blank">{{ user.blog }}</a></li>' +
+                        '<li>{{ user.joinedOn }}</li>' +
+                    '</ul>' +
+                    '<hr />' +
+                    '<div class="vcard-stats">'+
+                        '<a ng-hide="hideFollowers" href="https://github.com/{{ name }}/followers" class="vcardStat"><strong class="vcardStatCount">{{ user.followers}}</strong>followers</a>'+
+                        //'<a ng-hide="hideStarred" href="#" class="vcardStat"><strong class="vcardStatCount">{{ user.starred || 0}}</strong>starred</a>'+ //TODO get starred
+                        '<a ng-hide="hideFollowing" href="https://github.com/{{ name }}/following" class="vcardStat"><strong class="vcardStatCount">{{ user.following}}</strong>following</a>'+
+                        '<a ng-hide="hideRepos" href="https://github.com/{{ name }}?tab=repositories" class="vcardStat"><strong class="vcardStatCount">{{ user.public_repos }}</strong> repositories</a>'+
+                        '<a ng-hide="hideGists" href="https://gist.github.com/{{ name }}" class="vcardStat"><strong class="vcardStatCount">{{ user.public_gists }}</strong>  Gists</a>'+
+                    '</div>'+
+                '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 function createGravatarUrl() {
                     var id = '';
