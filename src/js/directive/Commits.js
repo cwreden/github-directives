@@ -15,14 +15,16 @@ angular.module('github-directives')
             template:
                 '<div class="panel panel-default">' +
                     '<div class="panel-heading">{{ user }} / {{ repo }} / Commits</div>' +
-                    '<div class="list-group">' +
-                        '<a href="{{ commit.html_url }}" target="_blank" ng-repeat="commit in commits" class="list-group-item">' +
-                            '<img src="{{ createGravatarUrl(commit.author.gravatar_id) }}" class="gravatar" ng-hide="hideAvatar">' +
-                            '<span>{{ commit.commit.message }}</span>' +
-                            '<span class="badge" ng-hide="hideAuthor">By: {{ commit.commit.author.name }}</span>' +
-                            '<span class="badge" ng-hide="hideDate">{{ commit.commit.author.date | date:mediumDate }}</span>' +
-                        '</a>' +
-                    '</div>' +
+                    '<ul class="list-group">' +
+                        '<li class="list-group-item" ng-repeat="commit in commits">'+
+                            '<a href="{{ commit.html_url }}" target="_blank"  class="list-group-item">' +
+                                '<img src="{{ createGravatarUrl(commit.author.gravatar_id) }}" class="gravatar" ng-hide="hideAvatar">' +
+                                '<span>{{ commit.commit.message }}</span>' +
+                                '<span class="badge" ng-hide="hideAuthor">By: {{ commit.commit.author.name }}</span>' +
+                                '<span class="badge" ng-hide="hideDate">{{ commit.commit.author.date | date:mediumDate }}</span>' +
+                            '</a>' +
+                        '</li>'+
+                    '</ul>' +
                 '</div>',
             controller: ['$scope', '$http', 'apiUrl', function($scope, $http, apiUrl) {
                 $scope.createGravatarUrl = function (id) {// TODO extract as service
