@@ -12,7 +12,7 @@ angular.module('github-directives')
                 'hideRepos': '=',
                 'hideStarred': '=',
                 'hideFollowers': '=',
-                'hidehideFollowing': '=',
+                'hideFollowing': '=',
                 'showBlog': '='
             },
             template:
